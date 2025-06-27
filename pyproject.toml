@@ -6,8 +6,9 @@ authors = [
     {name = "TheNullP",email = "mfreitasc0@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = "^3.13"
 dependencies = [
+    "fastapi[standard] (>=0.115.14,<0.116.0)"
 ]
 
 [tool.poetry]
