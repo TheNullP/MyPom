@@ -1,6 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
+from core.database import User, get_db
 
 router = APIRouter(tags=["user"])
 
@@ -25,9 +27,9 @@ def createUser(
     username: str,
     email: str,
     password: str,
-    # db = databaseTemp
+    db: Session = Depends(get_db)
 ):
-    existsUser = db_Query(databaseTemp, username)
+    existsUser = db.query(User).filter_by(username=username).first()
 
     if existsUser:
         raise HTTPException(
@@ -35,13 +37,15 @@ def createUser(
             status_code=404
         )
 
-    user = {
-        'username': username,
-        'email': email,
-        'password': password,
-    }
+    newUser = User(
+        username=username,
+        email=email,
+        password=password
+    )
 
-    databaseTemp.append(user)
+    db.add(newUser)
+    db.commit()
+    db.refresh(newUser)
 
     return JSONResponse(
         content={'msg': f'Usuário {username} criado com sucesso.'},
