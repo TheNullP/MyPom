@@ -21,7 +21,8 @@ packages = [{include = "mypom", from = "src"}]
 taskipy = "^1.14.1"
 
 [tool.taskipy.tasks]
-run = 'fastapi dev MyPom/app.py --reload --host 0.0.0.0 --port 8080'
+# run = 'fastapi dev MyPom/app.py --no-reload --host 0.0.0.0 --port 8080'
+run = 'uvicorn MyPom.app:app --reload --host 0.0.0.0 --port 8080'
 
 
 [build-system]

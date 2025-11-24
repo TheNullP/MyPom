@@ -3,12 +3,12 @@ from sqlalchemy.orm import Mapped, mapped_column, registry, sessionmaker
 
 reg = registry()
 
-engine = create_engine('postgresql+psycopg://docker:docker@0.0.0.0:5434/docker')
+engine = create_engine("postgresql+psycopg://docker:docker@0.0.0.0:5434/docker")
 
 
 @reg.mapped_as_dataclass
 class User:
-    __tablename__ = 'users'
+    __tablename__ = "users"
     id: Mapped[int] = mapped_column(init=False, primary_key=True)
     username: Mapped[str] = mapped_column(unique=True)
     email: Mapped[str] = mapped_column(unique=True)
@@ -16,12 +16,12 @@ class User:
 
 
 reg.metadata.create_all(engine)
-Session =  sessionmaker(engine)
+Session = sessionmaker(engine)
 
 
 # Função de Controle de Sessão
 def get_db():
-    db  = Session()
+    db = Session()
     try:
         yield db
     finally:
