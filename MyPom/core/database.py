@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine
+from datetime import datetime
+from sqlalchemy import DateTime, create_engine
 from sqlalchemy.orm import Mapped, mapped_column, registry, sessionmaker
 
 reg = registry()
@@ -13,6 +14,14 @@ class User:
     username: Mapped[str] = mapped_column(unique=True)
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
+
+
+@reg.mapped_as_dataclass
+class Pomo:
+    __tablename__ = "pomo"
+    id: Mapped[int] = mapped_column(init=False, primary_key=True)
+    duration: Mapped[int]
+    session_date: Mapped[DateTime] = mapped_column(default=datetime)
 
 
 reg.metadata.create_all(engine)
