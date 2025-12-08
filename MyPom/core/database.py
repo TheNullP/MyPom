@@ -1,10 +1,12 @@
 import datetime
 from sqlalchemy import DateTime, create_engine, func
 from sqlalchemy.orm import Mapped, mapped_column, registry, sessionmaker
+from MyPom.core.setting import Settings
 
+settings = Settings()
 reg = registry()
 
-engine = create_engine("postgresql+psycopg://docker:docker@0.0.0.0:5434/docker")
+engine = create_engine(settings.DB_URL)
 
 
 @reg.mapped_as_dataclass

@@ -11,7 +11,9 @@ dependencies = [
     "fastapi[standard] (>=0.115.14,<0.116.0)",
     "sqlalchemy (>=2.0.41,<3.0.0)",
     "psycopg (>=3.2.9,<4.0.0)",
-    "alembic (>=1.17.2,<2.0.0)"
+    "alembic (>=1.17.2,<2.0.0)",
+    "pytest (>=9.0.1,<10.0.0)",
+    "pydantic-settings (>=2.12.0,<3.0.0)"
 ]
 
 [tool.poetry]
@@ -24,6 +26,7 @@ taskipy = "^1.14.1"
 [tool.taskipy.tasks]
 # run = 'fastapi dev MyPom/app.py --no-reload --host 0.0.0.0 --port 8080'
 run = 'uvicorn MyPom.app:app --reload --host 0.0.0.0 --port 8080'
+test = "pytest -s -x -vv"
 
 
 [build-system]

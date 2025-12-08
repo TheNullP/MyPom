@@ -3,6 +3,9 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from MyPom.core.database import reg, engine
+from MyPom.core.setting import Settings
+
+settings = Settings()
 
 from alembic import context
 
@@ -20,7 +23,7 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 config.set_main_option(
-    "sqlalchemy.url", "postgresql+psycopg://docker:docker@0.0.0.0:5434/docker"
+    "sqlalchemy.url", settings.URL_DB
 )
 target_metadata = reg.metadata
 
