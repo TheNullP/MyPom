@@ -1,10 +1,10 @@
 import datetime
 
-from datetime  import date, timedelta
+from datetime import date, timedelta
 from time import sleep
 from typing_extensions import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy import Date, cast
 from sqlalchemy.future import select
@@ -39,7 +39,10 @@ def session_in(
         db.refresh(new_sesion)
 
     except Exception as e:
-        raise e
+        return HTTPException(
+            detail=f"Erro ao inserir nova sessão, Erro: {e}",
+            status_code=422,
+        )
 
     return JSONResponse(
         content="Sessão adicionada com sucesso.",
@@ -56,26 +59,31 @@ def session_list(db: Session = Depends(get_db)):
 @router.get("/dailysession", response_model=List[DailySumary])
 def daily_session(db: Session = Depends(get_db)):
     today = date.today()
-    response = (select(func.sum(Pomo.duration), Pomo.session_date).where(cast(Pomo.session_date, Date) == today).group_by(Pomo.session_date).group_by(Pomo.session_date))
+    response = (
+        select(func.sum(Pomo.duration), Pomo.session_date)
+        .where(cast(Pomo.session_date, Date) == today)
+        .group_by(Pomo.session_date)
+        .group_by(Pomo.session_date)
+    )
 
     results = db.execute(response).all()
 
     dailly_summaries = []
 
     for total, study_date in results:
-        dailly_summaries.append(
-            DailySumary(total_minutes=total, study_date=study_date)
-        )
+        dailly_summaries.append(DailySumary(total_minutes=total, study_date=study_date))
 
     return dailly_summaries
 
 
-@router.get('/weekSession')
+@router.get("/weekSession")
 def week_session(db: Session = Depends(get_db)):
     today = date.today()
-    
+
     uma_semana_atras = today - timedelta(weeks=1)
-    
-    response = db.query(Pomo).where(Pomo.session_date.between(uma_semana_atras, today)).all()
+
+    response = (
+        db.query(Pomo).where(Pomo.session_date.between(uma_semana_atras, today)).all()
+    )
 
     return response
