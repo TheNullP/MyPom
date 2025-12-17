@@ -50,8 +50,8 @@ def user(db: Session):
 def session_pomo(db: Session):
     today = date.today()
 
-    new_pomo1 = Pomo(duration=25, session_date=f"{today - timedelta(days=1)}")
-    new_pomo2 = Pomo(duration=60, session_date=f"{today - timedelta(days=1)}")
+    new_pomo1 = Pomo(duration=25, session_date=f"{today}")
+    new_pomo2 = Pomo(duration=60, session_date=f"{today}")
     new_pomo3 = Pomo(duration=25, session_date=f"{today - timedelta(days=2)}")
     new_pomo4 = Pomo(duration=25, session_date=f"{today - timedelta(days=3)}")
     new_pomo5 = Pomo(duration=25, session_date=f"{today - timedelta(days=4)}")
@@ -74,6 +74,11 @@ def session_pomo(db: Session):
     yield new_pomo1, new_pomo2, new_pomo3, new_pomo4, new_pomo5, new_pomo6
 
     db.delete(new_pomo1)
+    db.delete(new_pomo2)
+    db.delete(new_pomo3)
+    db.delete(new_pomo4)
+    db.delete(new_pomo5)
+    db.delete(new_pomo6)
     db.flush()
 
 
