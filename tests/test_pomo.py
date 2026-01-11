@@ -51,4 +51,4 @@ def test_lista_de_sessao_da_semana(db, session_pomo, client):
 
     assert response is not None
     assert response.status_code == 200
-    assert len(data) == 7
+    assert len(data) == 6

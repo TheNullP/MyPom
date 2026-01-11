@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  min-height: 1px;
+  background-color: #121212;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+}
+
+.containe-geral {
+  text-align: center;
+  background-color: #1e1e1e;
+  padding: 10rem;
+  border-radius: 20px
+}
