@@ -4,7 +4,7 @@ body {
   display: flex; 
   justify-content: center;
   align-items: center;
-  min-height: 1px;
+  min-height: 100vh;
   background-color: #121212;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #ffffff;
@@ -13,6 +13,59 @@ body {
 .containe-geral {
   text-align: center;
   background-color: #1e1e1e;
-  padding: 10rem;
-  border-radius: 20px
+  padding: 3rem;
+  border-radius: 20px;
+  width: 350px;
+  justify-content: center;
+}
+
+#title {
+  color: #ff5e57;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.clock {
+  width: 280px;
+  height: 150px;
+  margin: 0 auto 20px auto;
+  border-radius: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 
+
+#time {
+  font-size: 6rem;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.functions-btn {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+#start-btn { background-color: #2ecc71; color: white;}
+#pause-btn { background: #f1c40f; color: black;}
+#finale-btn {background: #e74c3c; color: white;}
+
+button:hover {
+  filter: brightness(1.2);
+}
+
+.ms-foco p {
+  font-style: italic;
+  color: #888;
 }
