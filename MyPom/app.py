@@ -9,7 +9,7 @@ app = FastAPI()
 
 # Routers
 app.include_router(user.router)
-app.include_router(pomo.router)
+app.include_router(pomo.router, prefix="/pomo")
 
 # Static Jinja2
 app.mount("/static", StaticFiles(directory="MyPom/static"), name="static")
@@ -19,4 +19,9 @@ templates = Jinja2Templates(directory="MyPom/templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse('home.html',{'request':request, })
+    return templates.TemplateResponse(
+        "home.html",
+        {
+            "request": request,
+        },
+    )

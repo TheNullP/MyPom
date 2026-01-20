@@ -35,13 +35,13 @@ async function finalizarSessao() {
     tempoSessao = tempoInicial - timeLeft;
 
     try {
-      const response = await fetch('/Pomo/sessionIn', {
+      const dataDeHoje = new Date().toISOString().split('T')[0];
+      
+
+      const response = await fetch('/pomo/sessionIn', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(
-          { 'duration_minuites': tempoSessao, 'session_date': new Date().toISOString() }
-        )
-
+        body: JSON.stringify({ duration_minutes: tempoSessao, session_date: dataDeHoje,})
       });
 
       if (response.ok) {
@@ -77,7 +77,7 @@ function pauseTimer() {
 
 function finaleTimer() {
   finalizarSessao();
-  pauseTimer();
+  // pauseTimer();
   timeLeft = 25 * 60;
   updateDisplay();
 }

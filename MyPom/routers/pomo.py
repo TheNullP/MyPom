@@ -14,7 +14,7 @@ from sqlalchemy.sql import func
 from MyPom.core.database import Pomo, get_db
 from MyPom.schemas.pomo_schema import DailySumary, Session_In, SessionM
 
-router = APIRouter(tags=["Pomo"])
+router = APIRouter(tags=["pomo"])
 
 
 def chrono(time):
