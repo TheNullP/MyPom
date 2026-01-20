@@ -19,4 +19,4 @@ templates = Jinja2Templates(directory="MyPom/templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse(request=request, name="home.html")
+    return templates.TemplateResponse('home.html',{'request':request, })

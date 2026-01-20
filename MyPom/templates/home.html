@@ -1,20 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyPom</title>
     <link href="/static/css/foco-time.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', path='/css/foco-time.css') }}"> -->
   </head>
   <body>
-    <div class="containe-geral">
+    <div class="containe-geral" class="no-select">
       <h1 id="title">MyPom</h1>
       
-      <div  id="clock" class="clock">
+      <div  id="clock" class="clock" unselectable="on">
+      <button onclick="alterarTempo(-5)" class="adjust-btn">-</button>
         <div id="time">
-          20:00
+          25:00
         </div>
+      <button onclick="alterarTempo(5)" class="adjust-btn">+</button>
       </div>
 
       <div class="functions-btn">
@@ -26,5 +29,6 @@
         <p id="ms-foco">Foco Total Agora!</p>
       </div>
     </div>
+    <script src="/static/js/focus.js"></script>
   </body>
 </html>

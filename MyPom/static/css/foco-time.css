@@ -39,6 +39,8 @@ body {
   font-size: 6rem;
   font-weight: bold;
   font-family: 'Courier New', Courier, monospace;
+  cursor: not-allowed;
+  
 }
 
 .functions-btn {
