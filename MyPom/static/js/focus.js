@@ -36,12 +36,12 @@ async function finalizarSessao() {
 
     try {
       const dataDeHoje = new Date().toISOString().split('T')[0];
-      
+
 
       const response = await fetch('/pomo/sessionIn', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ duration_minutes: tempoSessao, session_date: dataDeHoje,})
+        body: JSON.stringify({ duration_seconds: tempoSessao, session_date: dataDeHoje, })
       });
 
       if (response.ok) {
@@ -51,7 +51,7 @@ async function finalizarSessao() {
       }
 
     } catch (error) {
-      console.error('Errp na requisição: ', error);
+      console.error('Erro na requisição: ', error);
     }
   }
 }

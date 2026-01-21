@@ -30,7 +30,7 @@ def session_in(
 ):
     try:
         new_sesion = Pomo(
-            duration=pomo.duration_minutes,
+            duration=pomo.duration_seconds,
             session_date=pomo.session_date,
         )
 
@@ -71,7 +71,7 @@ def daily_session(db: Session = Depends(get_db)):
     dailly_summaries = []
 
     for total, study_date in results:
-        dailly_summaries.append(DailySumary(total_minutes=total, study_date=study_date))
+        dailly_summaries.append(DailySumary(total_seconds=total, study_date=study_date))
 
     return dailly_summaries
 
