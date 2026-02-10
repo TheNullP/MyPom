@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    background-color: #121212;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.dashboard {
+    width: 90%;
+    max-width: 800px;
+    padding-top: 2rem;
+    padding-bottom: 100px; 
+}
+
+.trend-indicator {
+    background: #1e1e1e;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+    border: 1px solid #333;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background-color: #1e1e1e;
+    padding: 1.2rem;
+    border-radius: 15px;
+    border-bottom: 3px solid #ff5e57; 
+}
+
+.stat-card:last-child {
+    grid-column: span 2;
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    margin: 5px 0;
+}
+
+.stat-value small {
+    font-size: 0.8rem;
+    color: #888;
+    margin-left: 4px;
+}
+
+/* Gráfico de Barras Simples */
+.chart-section {
+    background: #1e1e1e;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.bar-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 120px;
+    margin-top: 20px;
+}
+
+.bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 12%;
+}
+
+.bar {
+    width: 100%;
+    background: #ff5e57;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.5s ease;
+    min-height: 5px; 
+}
+
+.bar-day {
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 8px;
+}

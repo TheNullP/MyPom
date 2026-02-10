@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPom - Relatórios</title>
+    <link href="/static/css/report-style.css" rel="stylesheet">
+    <link href="/static/css/nav-bar.css" rel="stylesheet">
+</head>
+<body>
+    <div class="containe-geral dashboard">
+        <header>
+            <h1 id="title">Seu Progresso</h1>
+            <div class="trend-indicator">
+                <p>Hoje você estudou <strong>{{ porcentagem_diff }}%</strong> 
+                <span class="status-icon">{{ status_emoji }}</span> que ontem</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Hoje <small>min</small></span>
+                <h2 class="stat-value" id="total_hoje"></h2>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Semana <small>hora</small></span>
+                <h2 class="stat-value" id="total_semana"></h2>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Mês</span>
+                <h2 class="stat-value" id="total_mes">{{ total_mes }}<small>min</small></h2>
+            </div>
+        </section>
+
+        <section class="chart-section">
+            <span class="stat-label">Frequência Semanal</span>
+            <div class="bar-chart">
+                <div class="bar-container">
+                    <div class="bar" style="height: {{ valor }}%;" title="{{ valor }} min"></div>
+                    <span class="bar-day">{{ dia }}</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <nav class="navbar-bottom">
+        <div class="nav-item active"><span class="nav-text">Relatórios</span></div>
+        <div class="nav-item" onclick="window.location.href='/'"><span class="nav-text">Pomodoro</span></div>
+        <div class="nav-item"><span class="nav-text">Configurações</span></div>
+    </nav>
+
+    <script src="/static/js/report.js"></script>
+</body>
+</html>

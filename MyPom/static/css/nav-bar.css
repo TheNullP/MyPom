@@ -1,0 +1,36 @@
+.navbar-bottom {
+  position: fixed;   
+  bottom: 0;         
+  left: 0;
+  right: 0;
+  height: 70px;
+  background-color: #1e1e1e;
+  display: flex;     
+  justify-content: space-around; 
+  align-items: center;
+  z-index: 1000;     
+  border-top: 1px solid #333;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  color: #888;
+  transition: 0.3s;
+}
+
+.nav-item.active {
+  color: #ff5e57; 
+}
+
+.nav-item:hover {
+  color: #ffffff;
+}
+
+.nav-text {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 4px;
+}
