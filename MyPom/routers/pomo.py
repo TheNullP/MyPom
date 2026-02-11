@@ -85,5 +85,6 @@ def week_session(db: Session = Depends(get_db)):
     response = (
         db.query(Pomo).where(Pomo.session_date.between(uma_semana_atras, today)).all()
     )
+    total = [i.duration for i in response]
 
-    return response
+    return sum(total), response
