@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:15
+    container_name: mypom-postgres
+    environment:
+        POSTGRES_USER: docker
+        POSTGRES_DB: docker
+        POSTGRES_PASSWORD: docker
+    ports:
+      - "5434:5432"
+    restart: always
