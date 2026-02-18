@@ -13,17 +13,14 @@
     <div class="containe-geral" class="no-select">
       <h1 id="title">MyPom</h1>
       
-      <div  id="clock" class="clock" unselectable="on">
-      <button onclick="alterarTempo(-5)" class="adjust-btn">-</button>
-        <div id="time">
-          25:00
-        </div>
-      <button onclick="alterarTempo(5)" class="adjust-btn">+</button>
+      <div id="clock" class="clock">
+          <button onclick="alterarTempo(-5)" class="adjust-btn">-</button>
+          <div id="time">--:--</div> 
+          <button onclick="alterarTempo(5)" class="adjust-btn">+</button>
       </div>
 
       <div class="functions-btn">
         <button id="start-btn">Iniciar</button>
-        <button id="pause-btn">Parar</button>
         <button id="finale-btn">Finalizar</button>
       </div>
       <div class="ms-foco">
@@ -32,7 +29,7 @@
     </div>
 
     <nav class="navbar-bottom">
-      <div class="nav-item" onclick="window.location.href='/page/report'">
+      <div id="time" class="nav-item" onclick="window.location.href='/page/report'">
         <span class="nav-text">Relatórios</span>
       </div>
       <div class="nav-item active">
@@ -42,7 +39,26 @@
         <span class="nav-text">Configurações</span>
       </div>
     </nav>
+    <script>
+      (function() {
+          const savedEndTime = localStorage.getItem('pomoEndTime');
+          const savedTimeLeft = localStorage.getItem('pomoTimeLeft');
+          const display = document.getElementById('time');
+          
+          let initialTime = 25 * 60; 
 
+          if (savedEndTime) {
+              const remaining = Math.round((savedEndTime - new Date().getTime()) / 1000);
+              if (remaining > 0) initialTime = remaining;
+          } else if (savedTimeLeft) {
+              initialTime = parseInt(savedTimeLeft);
+          }
+
+          const m = Math.floor(initialTime / 60);
+          const s = initialTime % 60;
+          display.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      })();
+    </script>
     <script src="/static/js/focus.js"></script>
   </body>
 </html>
