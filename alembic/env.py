@@ -1,13 +1,14 @@
 from logging.config import fileConfig
 
+from alembic import context
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from MyPom.core.database import reg, engine
+
+from MyPom.core.database import reg
 from MyPom.core.setting import Settings
 
 settings = Settings()
 
-from alembic import context
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -22,9 +23,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-config.set_main_option(
-    "sqlalchemy.url", settings.URL_DB
-)
+config.set_main_option("sqlalchemy.url", settings.DB_URL)
 target_metadata = reg.metadata
 
 # other values from the config, defined by the needs of env.py,
