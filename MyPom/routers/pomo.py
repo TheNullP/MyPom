@@ -12,7 +12,13 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 
 from MyPom.core.database import Pomo, get_db
-from MyPom.schemas.pomo_schema import DailySumary, Session_In, SessionM
+from MyPom.schemas.pomo_schema import (
+    DailySumary,
+    DifferenceDays,
+    Month_session,
+    Session_In,
+    SessionM,
+)
 
 router = APIRouter(tags=["pomo"])
 
@@ -88,3 +94,44 @@ def week_session(db: Session = Depends(get_db)):
     total = [i.duration for i in response]
 
     return sum(total), response
+
+
+@router.get("/monthSession")
+def month_session(db: Session = Depends(get_db)):
+    today = date.today()
+    month = today.replace(day=1)
+
+    query = [
+        db.query(func.sum(Pomo.duration))
+        .filter(Pomo.session_date >= month, Pomo.session_date <= today)
+        .scalar(),
+        db.query(func.count(Pomo.session_date))
+        .filter(Pomo.session_date >= month, Pomo.session_date <= today)
+        .scalar(),
+    ]
+    return Month_session(
+        total_month_duration_minuts=query[0], total_month_sessions=query[1]
+    )
+
+
+@router.get("/differenceInDays")
+def difference_in_days(db: Session = Depends(get_db)):
+    today = date.today()
+    yesterday = today - timedelta(days=1)
+
+    query_day = (
+        db.query(func.sum(Pomo.duration)).filter(Pomo.session_date == today).scalar()
+        or 0
+    )
+    query_yesterday = (
+        db.query(func.sum(Pomo.duration))
+        .filter(Pomo.session_date == yesterday)
+        .scalar()
+        or 0
+    )
+
+    return DifferenceDays(
+        today=query_day,
+        yesterday=query_yesterday,
+        difference=query_day - query_yesterday,
+    )

@@ -20,8 +20,19 @@ class DailySumary(BaseModel):
     study_date: datetime.date
 
 
-class week_session(BaseModel):
+class Week_session(BaseModel):
     start_date: datetime.date
     end_date: datetime.date
     daily_totals: List[DailySumary]
-    total_week_duration_seconds: int
+    total_week_duration_minuts: int
+
+
+class Month_session(BaseModel):
+    total_month_duration_minuts: int
+    total_month_sessions: int
+
+
+class DifferenceDays(BaseModel):
+    today: int
+    yesterday: int
+    difference: int

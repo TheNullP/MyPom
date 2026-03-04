@@ -11,10 +11,7 @@
     <div class="containe-geral dashboard">
         <header>
             <h1 id="title">Seu Progresso</h1>
-            <div class="trend-indicator">
-                <p>Hoje você estudou <strong>{{ porcentagem_diff }}%</strong> 
-                <span class="status-icon">{{ status_emoji }}</span> que ontem</p>
-            </div>
+            <div class="trend-indicator" id="indicador"></div>
         </header>
 
         <section class="stats-grid">
@@ -23,12 +20,12 @@
                 <h2 class="stat-value" id="total_hoje">00:00</h2>
             </div>
             <div class="stat-card">
-                <span class="stat-label">Semana <small>hora</small></span>
+                <span class="stat-label">7 ultimos dias <small>hora</small></span>
                 <h2 class="stat-value" id="total_semana">00:00</h2>
             </div>
             <div class="stat-card">
                 <span class="stat-label">Mês</span>
-                <h2 class="stat-value" id="total_mes">{{ total_mes }}<small>min</small></h2>
+                <h2 class="stat-value" id="total_mes">00:00 </h2>
             </div>
         </section>
 
