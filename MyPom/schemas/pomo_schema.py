@@ -36,3 +36,8 @@ class DifferenceDays(BaseModel):
     today: int
     yesterday: int
     difference: int
+
+
+class Weekly_frequency(BaseModel):
+    dayOfTheWeek: str
+    duration: int

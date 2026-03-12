@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy import Date, cast
 from sqlalchemy.future import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, query
 from sqlalchemy.sql import func
 
 from MyPom.core.database import Pomo, get_db
@@ -18,9 +18,11 @@ from MyPom.schemas.pomo_schema import (
     Month_session,
     Session_In,
     SessionM,
+    Weekly_frequency,
 )
 
 router = APIRouter(tags=["pomo"])
+day_of_the_week = ["segunda", "terça", "quarta", "quinta", "sexta", "sábado", "domingo"]
 
 
 def chrono(time):
@@ -135,3 +137,27 @@ def difference_in_days(db: Session = Depends(get_db)):
         yesterday=query_yesterday,
         difference=query_day - query_yesterday,
     )
+
+
+@router.get("/weeklyfrequency")
+def weekly_frequency(db: Session = Depends(get_db)):
+    today = date.today()
+    sunday = today - timedelta(days=(today.weekday() + 1) % 7)
+
+    response = (
+        db.query(Pomo.session_date, func.sum(Pomo.duration).label("duration"))
+        .filter(Pomo.session_date.between(sunday, today))
+        .group_by(Pomo.session_date)
+        .all()
+    )
+
+    frequency = []
+    for i in response:
+        frequency.append(
+            Weekly_frequency(
+                dayOfTheWeek=day_of_the_week[i.session_date.weekday()],
+                duration=i.duration,
+            )
+        )
+
+    return frequency
