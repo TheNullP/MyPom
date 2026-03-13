@@ -141,23 +141,34 @@ def difference_in_days(db: Session = Depends(get_db)):
 
 @router.get("/weeklyfrequency")
 def weekly_frequency(db: Session = Depends(get_db)):
-    today = date.today()
-    sunday = today - timedelta(days=(today.weekday() + 1) % 7)
+    hoje = date.today()
 
-    response = (
-        db.query(Pomo.session_date, func.sum(Pomo.duration).label("duration"))
-        .filter(Pomo.session_date.between(sunday, today))
+    sunday = hoje - timedelta(days=(hoje.weekday() + 1) % 7)
+
+    gabarito = {}
+    for i in range(7):
+        data_dia = sunday + timedelta(days=i)
+        gabarito[data_dia] = 0
+
+    results = (
+        db.query(Pomo.session_date, func.sum(Pomo.duration).label("total"))
+        .filter(Pomo.session_date >= sunday, Pomo.session_date <= hoje)
         .group_by(Pomo.session_date)
         .all()
     )
 
+    for row in results:
+        data_banco = row.session_date
+        if hasattr(data_banco, "date"):
+            data_banco = data_banco.date()
+
+        if data_banco in gabarito:
+            gabarito[data_banco] = int(row.total)
+
     frequency = []
-    for i in response:
+    for data_dia, duracao in gabarito.items():
         frequency.append(
-            Weekly_frequency(
-                dayOfTheWeek=day_of_the_week[i.session_date.weekday()],
-                duration=i.duration,
-            )
+            {"dayOfTheWeek": day_of_the_week[data_dia.weekday()], "duration": duracao}
         )
 
     return frequency

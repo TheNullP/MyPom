@@ -69,16 +69,49 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (data.difference > 0) {
 
-      indicador.innerText = `Hoje você estudou ${data.difference} minutos a mais que ontem.`
-      return;
+      indicador.innerText = `Hoje você estudou ${data.difference} minutos a mais que ontem.`;
     } else if (data.difference < 0) {
-      indicador.innerText = `Hoje você estudou ${data.difference * (-1)} minutos a menos que ontem.`
-      indicador.style.color = "red"
+      indicador.innerText = `Hoje você estudou ${data.difference * (-1)} minutos a menos que ontem.`;
+      indicador.style.color = "red";
     }
 
 
   } catch (error) {
-    throw new Error('Error: sem dados para comparação.')
+    throw new Error('Error: sem dados para comparação.');
+
+  }
+  try {
+    response = await fetch('/pomo/weeklyfrequency');
+
+    if (!response.ok) {
+      throw new Error("ERROR: Sem dados para frequencia semanal.");
+    }
+    const data = await response.json();
+    const chartContainer = document.getElementById('weekly-bar-chart');
+
+
+    const maxMinutos = Math.max(...data.map(d => d.duration), 1);
+
+    chartContainer.innerHTML = '';
+
+    data.forEach(item => {
+
+      const alturaPercentual = (item.duration / maxMinutos) * 100;
+
+      const barContainer = document.createElement('div');
+      barContainer.className = 'bar-container';
+
+      barContainer.innerHTML = `
+        <div class="bar"
+          style="height: ${alturaPercentual}%;"
+          title="${item.duration} min">
+        </div>
+        <span class="bar-day"> ${item.dayOfTheWeek}</span>
+      `;
+      chartContainer.appendChild(barContainer);
+    });
+  } catch (error) {
+    console.error('Erro ao carregar gráfico.', error);
 
   }
 

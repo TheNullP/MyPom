@@ -1,31 +1,31 @@
 .bar-chart {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end; /* Alinha as barras na base */
-    height: 150px; /* Altura fixa do gráfico */
-    padding-top: 20px;
-    border-bottom: 2px solid #333;
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-end; /* Alinha as barras na base */
+	height: 150px; /* Altura fixa do gráfico */
+	padding-top: 20px;
+	border-bottom: 2px solid #333;
 }
 
 .bar-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 30px;
-    height: 100%; /* Ocupa a altura do chart para o flex-end funcionar */
-    justify-content: flex-end;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 30px;
+	height: 100%; /* Ocupa a altura do chart para o flex-end funcionar */
+	justify-content: flex-end;
 }
 
 .bar {
-    width: 100%;
-    background: linear-gradient(to top, #ff5e57, #ff8e8a);
-    border-radius: 4px 4px 0 0;
-    transition: height 0.6s ease-out; /* Efeito de animação ao carregar */
+	width: 100%;
+	background: linear-gradient(to top, #ff5e57, #ff8e8a);
+	border-radius: 4px 4px 0 0;
+	transition: height 0.6s ease-out; /* Efeito de animação ao carregar */
 }
 
 .bar-day {
-    font-size: 0.7rem;
-    color: #888;
-    margin-top: 10px;
-    text-transform: uppercase;
+	font-size: 0.7rem;
+	color: #888;
+	margin-top: 10px;
+	text-transform: uppercase;
 }
