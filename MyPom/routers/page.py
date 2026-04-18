@@ -13,3 +13,8 @@ async def report(request: Request):
         "report.html",
         {"request": request},
     )
+
+
+@router.get("/options", response_class=HTMLResponse)
+async def options(request: Request):
+    return templates.TemplateResponse("options.html", {"request": request})

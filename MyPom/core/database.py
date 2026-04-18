@@ -16,6 +16,7 @@ class User:
     username: Mapped[str] = mapped_column(unique=True)
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
+    project: Mapped[str]
 
 
 @reg.mapped_as_dataclass

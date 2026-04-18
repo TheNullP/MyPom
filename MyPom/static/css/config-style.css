@@ -1,0 +1,111 @@
+/* Importando as cores e fontes padrão (ajuste conforme seu projeto) */
+:root {
+	--bg-color: #1e1e1e; /* Obsidian-like dark */
+	--card-bg: #2a2a2a;
+	--text-primary: #f5f5f5;
+	--text-secondary: #a0a0a0;
+	--accent-color: #ff5e57; /* Vermelho Pomodoro */
+	--danger-color: #e74c3c;
+}
+
+body {
+	background-color: var(--bg-color);
+	color: var(--text-primary);
+	font-family: "Inter", sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.settings-page {
+	padding: 20px;
+	max-width: 600px;
+	margin: 0 auto;
+	padding-bottom: 100px; /* Espaço para a navbar */
+}
+
+#title {
+	font-size: 1.8rem;
+	margin-bottom: 30px;
+	border-bottom: 1px solid #333;
+	padding-bottom: 10px;
+}
+
+/* Grupos de Configuração */
+.settings-group {
+	background: var(--card-bg);
+	border-radius: 12px;
+	padding: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.settings-group h3 {
+	margin-top: 0;
+	font-size: 1rem;
+	color: var(--text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+/* Itens de Configuração */
+.setting-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 0;
+	border-bottom: 1px solid #3d3d3d;
+}
+
+.setting-item:last-child {
+	border-bottom: none;
+}
+
+.setting-item label {
+	font-weight: 500;
+}
+
+/* Inputs e Selects */
+input[type="number"],
+select {
+	background: #1e1e1e;
+	border: 1px solid #444;
+	color: white;
+	padding: 8px 12px;
+	border-radius: 6px;
+	width: 80px;
+	text-align: center;
+}
+
+input:focus,
+select:focus {
+	outline: none;
+	border-color: var(--accent-color);
+}
+
+/* Zona de Perigo */
+.danger-zone {
+	border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.danger-zone p {
+	font-size: 0.85rem;
+	color: var(--text-secondary);
+	margin-bottom: 20px;
+}
+
+.btn-danger {
+	width: 100%;
+	padding: 12px;
+	background-color: transparent;
+	color: var(--danger-color);
+	border: 1.5px solid var(--danger-color);
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: bold;
+	transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+	background-color: var(--danger-color);
+	color: white;
+}

@@ -1,5 +1,3 @@
-import datetime
-
 from datetime import date, timedelta
 from time import sleep
 from typing_extensions import List
@@ -8,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy import Date, cast
 from sqlalchemy.future import select
-from sqlalchemy.orm import Session, query
+from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 
 from MyPom.core.database import Pomo, get_db
@@ -18,17 +16,10 @@ from MyPom.schemas.pomo_schema import (
     Month_session,
     Session_In,
     SessionM,
-    Weekly_frequency,
 )
 
 router = APIRouter(tags=["pomo"])
 day_of_the_week = ["segunda", "terça", "quarta", "quinta", "sexta", "sábado", "domingo"]
-
-
-def chrono(time):
-    for i in range(time, -1, -1):
-        print(i)
-        sleep(0.1)
 
 
 @router.post("/sessionIn", response_model=SessionM)

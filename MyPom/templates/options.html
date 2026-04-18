@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPom - Configurações</title>
+    <link href="/static/css/config-style.css" rel="stylesheet">
+    <link href="/static/css/nav-bar.css" rel="stylesheet">
+</head>
+<body>
+    <div class="containe-geral settings-page">
+        <header>
+            <h1 id="title">Configurações</h1>
+        </header>
+
+        <section class="settings-group">
+            <h3>⏱️ Tempos (em minutos)</h3>
+            <div class="setting-item">
+                <label>Foco</label>
+                <input type="number" id="pomo-time" value="25">
+            </div>
+            <div class="setting-item">
+                <label>Pausa Curta</label>
+                <input type="number" id="short-break" value="5">
+            </div>
+        </section>
+
+        <section class="settings-group">
+            <h3>🔔 Notificações</h3>
+            <div class="setting-item">
+                <label>Som de alerta</label>
+                <select id="sound-type">
+                    <option value="digital">Digital</option>
+                    <option value="sino">Sino</option>
+                    <option value="natureza">Natureza</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="settings-group danger-zone">
+            <h3>⚠️ Zona de Perigo</h3>
+            <p>Ações permanentes que não podem ser desfeitas.</p>
+            <button id="btn-clear-db" class="btn-danger">Limpar Todo o Histórico</button>
+        </section>
+    </div>
+
+    <nav class="navbar-bottom">
+        <div class="nav-item" onclick="window.location.href='/report'"><span class="nav-text">Relatórios</span></div>
+        <div class="nav-item" onclick="window.location.href='/'"><span class="nav-text">Pomodoro</span></div>
+        <div class="nav-item active"><span class="nav-text">Configurações</span></div>
+    </nav>
+
+    <script src="/static/js/settings.js"></script>
+</body>
+</html>
