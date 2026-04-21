@@ -63,7 +63,7 @@ async function sessionExpiredDueToTimeout() {
 		});
 
 		if (response.ok) {
-			alert("Sessão salva com sucesso!");
+			// alert("Sessão salva com sucesso!");
 			resetTudo();
 		} else {
 			alert("Erro ao salvar no servidor.");
@@ -71,6 +71,7 @@ async function sessionExpiredDueToTimeout() {
 	} catch (error) {
 		console.error("Erro:", error);
 	}
+	alert("Sessão salva com sucesso!");
 }
 
 function resetTudo() {

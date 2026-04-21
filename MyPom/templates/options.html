@@ -17,11 +17,17 @@
             <h3>⏱️ Tempos (em minutos)</h3>
             <div class="setting-item">
                 <label>Foco</label>
-                <input type="number" id="pomo-time" value="25">
+                <div class="control-wrapper">
+                    <input type="number" id="pomo-time" value="25">
+                    <button type="submit" class="btn-option" id="pomo-time-btn">✓</button>
+                </div>
             </div>
             <div class="setting-item">
                 <label>Pausa Curta</label>
-                <input type="number" id="short-break" value="5">
+                <div class="control-wrapper">
+                    <input type="number" id="short-break" value="5">
+                    <button type="submit" class="btn-option" id="short-break-btn">✓</button>
+                </div>
             </div>
         </section>
 
@@ -29,27 +35,32 @@
             <h3>🔔 Notificações</h3>
             <div class="setting-item">
                 <label>Som de alerta</label>
-                <select id="sound-type">
-                    <option value="digital">Digital</option>
-                    <option value="sino">Sino</option>
-                    <option value="natureza">Natureza</option>
-                </select>
+                <div class="control-wrapper">
+                    <select id="sound-type">
+                        <option value="digital">Digital</option>
+                        <option value="sino">Sino</option>
+                        <option value="natureza">Natureza</option>
+                    </select>
+                    <button type="submit" class="btn-option" id="sound-btn">✓</button>
+                </div>
             </div>
         </section>
 
-        <section class="settings-group danger-zone">
-            <h3>⚠️ Zona de Perigo</h3>
-            <p>Ações permanentes que não podem ser desfeitas.</p>
-            <button id="btn-clear-db" class="btn-danger">Limpar Todo o Histórico</button>
+        <section class="settings-group">
+            <h3>🔄 Banco de Dados</h3>
+            <div class="setting-item">
+                <button id="btn-clear-data">Limpar banco de dados?</button>
+            </div>
         </section>
+            
     </div>
 
     <nav class="navbar-bottom">
-        <div class="nav-item" onclick="window.location.href='/report'"><span class="nav-text">Relatórios</span></div>
+        <div class="nav-item" onclick="window.location.href='/page/report'"><span class="nav-text">Relatórios</span></div>
         <div class="nav-item" onclick="window.location.href='/'"><span class="nav-text">Pomodoro</span></div>
-        <div class="nav-item active"><span class="nav-text">Configurações</span></div>
+        <div class="nav-item active" onclick="window.location.href='/page/options'"><span class="nav-text">Configurações</span></div>
     </nav>
 
-    <script src="/static/js/settings.js"></script>
+    <script src="/static/js/options.js"></script>
 </body>
 </html>

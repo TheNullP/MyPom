@@ -1,10 +1,9 @@
-/* Importando as cores e fontes padrão (ajuste conforme seu projeto) */
 :root {
-	--bg-color: #1e1e1e; /* Obsidian-like dark */
+	--bg-color: #1e1e1e;
 	--card-bg: #2a2a2a;
 	--text-primary: #f5f5f5;
 	--text-secondary: #a0a0a0;
-	--accent-color: #ff5e57; /* Vermelho Pomodoro */
+	--accent-color: #ff5e57;
 	--danger-color: #e74c3c;
 }
 
@@ -20,7 +19,7 @@ body {
 	padding: 20px;
 	max-width: 600px;
 	margin: 0 auto;
-	padding-bottom: 100px; /* Espaço para a navbar */
+	padding-bottom: 100px;
 }
 
 #title {
@@ -70,10 +69,11 @@ select {
 	background: #1e1e1e;
 	border: 1px solid #444;
 	color: white;
-	padding: 8px 12px;
+	padding: 8px;
 	border-radius: 6px;
-	width: 80px;
+	width: 70px;
 	text-align: center;
+	transition: border-color 0.3;
 }
 
 input:focus,
@@ -108,4 +108,61 @@ select:focus {
 .btn-danger:hover {
 	background-color: var(--danger-color);
 	color: white;
+}
+
+.btn-option {
+	background-color: var(--accent-color);
+	color: white;
+	border: none;
+	border-radius: 6px;
+	width: 35px;
+	height: 35px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-weight: bold;
+	transition:
+		transform 0.2s,
+		background-color 0.3s;
+}
+
+.btn-option:hover {
+	background-color: #ff7e79;
+	transform: scale(1.05);
+}
+
+.btn-option:active {
+	transform: scale(0.95);
+}
+
+#btn-clear-data {
+	font-size: 1rem;
+	background-color: #ff2f00;
+	padding: 18px;
+	color: white;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	cursor: pointer;
+	border: none;
+	border-radius: 6px;
+	transition:
+		transform 0.2s,
+		background-color 0.3s;
+}
+#btn-clear-data:hover {
+	background-color: #ff2f00;
+	transform: scale(1.05);
+}
+
+.control-wrapper {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+select {
+	width: 110px;
+	text-align: left;
 }

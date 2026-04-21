@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       barContainer.className = "bar-container";
 
       barContainer.innerHTML = `
+        <span class="bar-value">${item.duration}m</span>
         <div class="bar"
           style="height: ${alturaPercentual}%;"
           title="${item.duration} min">
