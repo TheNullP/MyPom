@@ -18,15 +18,26 @@
             <div class="setting-item">
                 <label>Foco</label>
                 <div class="control-wrapper">
-                    <input type="number" id="pomo-time" value="25">
-                    <button type="submit" class="btn-option" id="pomo-time-btn">✓</button>
+                    <select id="focus-time">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="45">45</option>
+                        <option value="60">60</option>
+                    </select>
+                    <button type="submit" class="btn-option" id="btn-pomo-time">✓</button>
                 </div>
             </div>
             <div class="setting-item">
                 <label>Pausa Curta</label>
                 <div class="control-wrapper">
-                    <input type="number" id="short-break" value="5">
-                    <button type="submit" class="btn-option" id="short-break-btn">✓</button>
+                    <select>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                    <button type="submit" class="btn-option" id="btn-short-break">✓</button>
                 </div>
             </div>
         </section>
@@ -41,7 +52,7 @@
                         <option value="sino">Sino</option>
                         <option value="natureza">Natureza</option>
                     </select>
-                    <button type="submit" class="btn-option" id="sound-btn">✓</button>
+                    <button type="submit" class="btn-option" id="btn-sound">✓</button>
                 </div>
             </div>
         </section>

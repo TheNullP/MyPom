@@ -30,9 +30,13 @@ def update_focus(
     time: UpdateFocus,
     db: Session = Depends(get_db),
 ):
+    pass_time = [5, 10, 25, 45, 60]
+
+    if time.focus not in pass_time:
+        raise HTTPException(detail="Erro: Selecione uma das opções.", status_code=400)
 
     if time is None or time.focus <= 0:
-        raise HTTPException(detail="Somente números acima de 0.", status_code=400)
+        raise HTTPException(detail="Erro: Selecione uma das opções.", status_code=400)
     try:
         data = db.query(User).filter_by(id=2).first()
         data.focus = time.focus
