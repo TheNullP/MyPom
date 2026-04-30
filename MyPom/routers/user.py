@@ -1,9 +1,11 @@
+from http import HTTPStatus
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 from MyPom.core.database import User, get_db
 from MyPom.schemas.user_schema import UserModel
+from MyPom.core.security import get_current_user, get_password_hash
 
 router = APIRouter(tags=["user"])
 
@@ -16,7 +18,8 @@ def createUser(user: UserModel, db: Session = Depends(get_db)):
         raise HTTPException(
             detail={"msg": "Username ou Email já Existe."}, status_code=404
         )
-    newUser = User(username=user.username, email=user.email, password=user.password)
+    hashed_password = get_password_hash(user.password)
+    newUser = User(username=user.username, email=user.email, password=hashed_password)
 
     db.add(newUser)
     db.commit()
@@ -61,21 +64,27 @@ def update_user(
     IdUser: int,
     user: UserModel,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    exist_user = db.query(User).filter_by(id=IdUser).first()
+    if current_user != user.username:
+        raise HTTPException(
+            status_code=HTTPStatus.FORBIDDEN, detail="Not enough permission"
+        )
+    hashed_password = get_password_hash(user.password)
 
-    if not exist_user:
+    if not current_user:
         raise HTTPException(
             detail="Usuario não localizado.",
             status_code=404,
         )
+
     try:
-        exist_user.username = user.username
-        exist_user.email = user.email
-        exist_user.password = user.password
+        current_user.username = user.username
+        current_user.email = user.email
+        current_user.password = hashed_password
 
         db.commit()
-        db.refresh(exist_user)
+        db.refresh(current_user)
 
     except Exception as e:
         raise e

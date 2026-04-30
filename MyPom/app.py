@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
-from MyPom.routers import user, pomo, page, options
+from MyPom.routers import user, pomo, page, options, token
 from fastapi.staticfiles import StaticFiles
 from MyPom.core.config import templates
 
@@ -12,6 +12,7 @@ app.include_router(user.router, prefix="/user")
 app.include_router(pomo.router, prefix="/pomo")
 app.include_router(page.router, prefix="/page")
 app.include_router(options.router, prefix="/options")
+app.include_router(token.router)
 
 # Static Jinja2
 app.mount("/static", StaticFiles(directory="MyPom/static"), name="static")
