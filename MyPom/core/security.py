@@ -47,17 +47,17 @@ def get_current_user(
 
     try:
         payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        subject_email = payload.get("sub")
+        username = payload.get("sub")
 
-        if not subject_email:
+        if not username:
             raise credencials_exception
 
     except DecodeError:
         raise credencials_exception
 
-    user = db.query(User).filter_by(username=subject_email.username).first()
+    user = db.query(User).filter_by(username=username).first()
 
     if not user:
         raise credencials_exception
 
-    raise user
+    return user

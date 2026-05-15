@@ -18,3 +18,13 @@ async def report(request: Request):
 @router.get("/options", response_class=HTMLResponse)
 async def options(request: Request):
     return templates.TemplateResponse("options.html", {"request": request})
+
+
+@router.get("/login", response_class=HTMLResponse)
+async def login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
+@router.get("/register", response_class=HTMLResponse)
+async def register(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})

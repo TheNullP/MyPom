@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPom - Login</title>
+    <link href="/static/css/login-style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <header class="login-header">
+            <h1 id="title">MyPom</h1>
+            <p>Foco total, um ciclo por vez.</p>
+        </header>
+
+        <form id="login-form" class="login-form">
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required placeholder="Seu usuário">
+            </div>
+
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••">
+            </div>
+
+            <button type="submit" id="btn-login">Entrar</button>
+        </form>
+
+        <footer class="login-footer">
+            <p>Não tem uma conta? <a href="/page/register">Cadastre-se</a></p>
+        </footer>
+    </div>
+    <script src="/static/js/login.js"></script>
+</body>
+</html>

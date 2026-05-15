@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 from MyPom.core.database import User, get_db
-from MyPom.schemas.user_schema import UserModel
+from MyPom.schemas.user_schema import CurrentUser, UserModel
 from MyPom.core.security import get_current_user, get_password_hash
 
 router = APIRouter(tags=["user"])
@@ -37,12 +37,26 @@ def search_user(db: Session = Depends(get_db)):
     return response
 
 
+@router.get("/currentUser")
+def current_user(
+    user: User = Depends(get_current_user),
+):
+
+    current_user = CurrentUser(
+        username=user.username,
+        email=user.email,
+        focus=user.focus,
+    )
+
+    return current_user
+
+
 @router.delete("/deleteUser/")
 def delete_user(
-    IdUser: int,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    exist_user = db.query(User).filter_by(id=IdUser).first()
+    exist_user = db.query(User).filter_by(username=current_user.username).first()
 
     if not exist_user:
         raise HTTPException(
@@ -61,7 +75,6 @@ def delete_user(
 
 @router.put("/updateUser")
 def update_user(
-    IdUser: int,
     user: UserModel,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
