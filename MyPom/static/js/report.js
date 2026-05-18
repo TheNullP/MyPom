@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 			indicador.style.color = "#538255";
 		} else if (data.difference < 0) {
 			indicador.innerText = `Hoje você estudou ${data.difference * -1} minutos a menos que ontem.`;
-			indicador.style.color = "#913232";
+			indicador.style.color = "#ff8c88";
 		}
 	} catch (error) {
 		throw new Error("Error: sem dados para comparação.");

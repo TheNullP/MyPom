@@ -15,9 +15,7 @@ def createUser(user: UserModel, db: Session = Depends(get_db)):
     existsUser = db.query(User).filter_by(username=user.username).first()
 
     if existsUser:
-        raise HTTPException(
-            detail={"msg": "Username ou Email já Existe."}, status_code=404
-        )
+        raise HTTPException(detail="Username ou Email já Existe.", status_code=400)
     hashed_password = get_password_hash(user.password)
     newUser = User(username=user.username, email=user.email, password=hashed_password)
 
