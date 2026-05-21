@@ -4,6 +4,8 @@ const total_month = document.getElementById("total_mes");
 const indicador = document.getElementById("indicador");
 
 document.addEventListener("DOMContentLoaded", async () => {
+	const token = localStorage.getItem("access_token");
+
 	function sum_duration(mints) {
 		let hour = (mints / 60) | 0;
 		let mn = mints % 60;
@@ -12,7 +14,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 
 	try {
-		const response = await fetch("/pomo/dailysession");
+		const response = await fetch("/pomo/dailysession", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 
 		if (!response.ok) {
 			throw new Error("ERROR: Sem dados do dia.");
@@ -25,7 +29,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 		console.error(error);
 	}
 	try {
-		const response = await fetch("/pomo/weekSession");
+		const response = await fetch("/pomo/weekSession", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 
 		if (!response.ok) {
 			throw new Error("ERROR: Sem dados da semana.");
@@ -38,7 +44,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 		console.error(error);
 	}
 	try {
-		const response = await fetch("/pomo/monthSession");
+		const response = await fetch("/pomo/monthSession", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 
 		if (!response.ok) {
 			throw new Error("Error: Sem dados do mês.");
@@ -51,7 +59,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 		console.error(error);
 	}
 	try {
-		const response = await fetch("/pomo/differenceInDays");
+		const response = await fetch("/pomo/differenceInDays", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 
 		if (!response.ok) {
 			throw new Error("Error: Sem dados para comparação.");
@@ -69,7 +79,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 		throw new Error("Error: sem dados para comparação.");
 	}
 	try {
-		response = await fetch("/pomo/weeklyfrequency");
+		response = await fetch("/pomo/weeklyfrequency", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 
 		if (!response.ok) {
 			throw new Error("ERROR: Sem dados para frequencia semanal.");

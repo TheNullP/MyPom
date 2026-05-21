@@ -1,5 +1,4 @@
 const register_form = document.getElementById("register-form");
-const confirm_password = document.getElementById("confirm-password");
 
 register_form.addEventListener("submit", async (e) => {
 	e.preventDefault();
@@ -7,7 +6,7 @@ register_form.addEventListener("submit", async (e) => {
 	const form = new FormData(register_form);
 	const data = Object.fromEntries(form);
 
-	if (data.password !== confirm_password) {
+	if (data.password !== data.confirm_password) {
 		alert("As senhas não coincidem!");
 		return;
 	}
@@ -26,9 +25,14 @@ register_form.addEventListener("submit", async (e) => {
 			window.location.href = "/page/login";
 		} else {
 			const errData = await response.json();
-			alert(`Erro: ${errData.detail.msg || "Erro ao cadastrar."}`);
+			alert(`${errData["detail"] || "Erro ao cadastrar."}`);
 		}
 	} catch (error) {
 		console.error("Erro na requisição:", error);
 	}
+});
+title.addEventListener("click", async (e) => {
+	e.preventDefault();
+
+	window.location.href = "/";
 });

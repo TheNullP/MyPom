@@ -1,13 +1,16 @@
 from datetime import datetime, timedelta
 from http import HTTPStatus
 from zoneinfo import ZoneInfo
+from alembic.util import exc
 from fastapi import Depends, HTTPException
 from jwt import DecodeError, encode, decode
+import jwt
 from pwdlib import PasswordHash
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
 from MyPom.core.database import User, get_db
+import re
 
 
 SECRET_KEY = "12345_PROVISORIO"
@@ -35,6 +38,11 @@ def verify_password_hash(plain_password: str, hashed_password: str):
     return PasswordHash.recommended().verify(plain_password, hashed_password)
 
 
+def email_pattern(email):
+    pattern = r"^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z\.a-zA-Z]{2,}$"
+    return bool(re.match(pattern, email))
+
+
 def get_current_user(
     db: Session = Depends(get_db),
     token: str = Depends(oauth2_schema),
@@ -53,6 +61,9 @@ def get_current_user(
             raise credencials_exception
 
     except DecodeError:
+        raise credencials_exception
+
+    except jwt.exceptions.ExpiredSignatureError:
         raise credencials_exception
 
     user = db.query(User).filter_by(username=username).first()

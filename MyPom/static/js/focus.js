@@ -18,6 +18,7 @@ async function finalizarSessao() {
 	if (isRunning) pauseTimer();
 
 	const salvar = confirm("Deseja finalizar e salvar esta sessão, Benzinho?");
+	const token = localStorage.getItem("access_token");
 
 	if (salvar) {
 		const tempoEstudado = Math.max(0, tempoInicial - timeLeft);
@@ -26,7 +27,10 @@ async function finalizarSessao() {
 			const dataDeHoje = new Date().toISOString().split("T")[0];
 			const response = await fetch("/pomo/sessionIn", {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
 				body: JSON.stringify({
 					duration_seconds: Math.round(tempoEstudado / 60),
 					session_date: dataDeHoje,
@@ -50,12 +54,16 @@ async function sessionExpiredDueToTimeout() {
 	alert("Sessão concluida com sucesso.");
 
 	const tempoEstudado = Math.max(0, tempoInicial - timeLeft);
+	const token = localStorage.getItem("access_token");
 
 	try {
 		const dataDeHoje = new Date().toISOString().split("T")[0];
 		const response = await fetch("/pomo/sessionIn", {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
 			body: JSON.stringify({
 				duration_seconds: Math.round(tempoEstudado / 60),
 				session_date: dataDeHoje,

@@ -8,7 +8,8 @@ from sqlalchemy.future import select
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 
-from MyPom.core.database import Pomo, get_db
+from MyPom.core.database import Pomo, User, get_db
+from MyPom.core.security import get_current_user
 from MyPom.schemas.pomo_schema import (
     DailySumary,
     DifferenceDays,
@@ -25,11 +26,13 @@ day_of_the_week = ["segunda", "terça", "quarta", "quinta", "sexta", "sábado", 
 def session_in(
     pomo: Session_In,
     db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     try:
         new_sesion = Pomo(
             duration=pomo.duration_seconds,
             session_date=pomo.session_date,
+            user_id=user.id,
         )
 
         db.add(new_sesion)
@@ -49,17 +52,25 @@ def session_in(
 
 
 @router.get("/SessionList")
-def session_list(db: Session = Depends(get_db)):
-    response = db.query(Pomo).all()
+def session_list(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    response = db.query(Pomo).filter_by(user_id=user.id).first()
+    if not response:
+        return HTTPException(detail="Server Error", status_code=500)
     return response
 
 
 @router.get("/dailysession", response_model=List[DailySumary])
-def daily_session(db: Session = Depends(get_db)):
+def daily_session(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     today = date.today()
     response = (
         select(func.sum(Pomo.duration), Pomo.session_date)
-        .where(cast(Pomo.session_date, Date) == today)
+        .where(cast(Pomo.session_date, Date) == today and Pomo.user_id == user.id)
         .group_by(Pomo.session_date)
         .group_by(Pomo.session_date)
     )
@@ -75,13 +86,21 @@ def daily_session(db: Session = Depends(get_db)):
 
 
 @router.get("/weekSession")
-def week_session(db: Session = Depends(get_db)):
+def week_session(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     today = date.today()
 
     uma_semana_atras = today - timedelta(weeks=1)
 
     response = (
-        db.query(Pomo).where(Pomo.session_date.between(uma_semana_atras, today)).all()
+        db.query(Pomo)
+        .where(
+            Pomo.session_date.between(uma_semana_atras, today),
+            Pomo.user_id == user.id,
+        )
+        .all()
     )
     total = [i.duration for i in response]
 
@@ -89,30 +108,47 @@ def week_session(db: Session = Depends(get_db)):
 
 
 @router.get("/monthSession")
-def month_session(db: Session = Depends(get_db)):
+def month_session(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     today = date.today()
     month = today.replace(day=1)
 
     query = [
         db.query(func.sum(Pomo.duration))
-        .filter(Pomo.session_date >= month, Pomo.session_date <= today)
+        .filter(
+            Pomo.user_id == user.id,
+            Pomo.session_date >= month,
+            Pomo.session_date <= today,
+        )
         .scalar(),
         db.query(func.count(Pomo.session_date))
-        .filter(Pomo.session_date >= month, Pomo.session_date <= today)
+        .filter(
+            Pomo.session_date >= month,
+            Pomo.session_date <= today,
+            Pomo.user_id == user.id,
+        )
         .scalar(),
     ]
     return Month_session(
-        total_month_duration_minuts=query[0], total_month_sessions=query[1]
+        total_month_duration_minuts=query[0] or 0,
+        total_month_sessions=query[1],
     )
 
 
 @router.get("/differenceInDays")
-def difference_in_days(db: Session = Depends(get_db)):
+def difference_in_days(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     today = date.today()
     yesterday = today - timedelta(days=1)
 
     query_day = (
-        db.query(func.sum(Pomo.duration)).filter(Pomo.session_date == today).scalar()
+        db.query(func.sum(Pomo.duration))
+        .filter(Pomo.session_date == today, Pomo.user_id == user.id)
+        .scalar()
         or 0
     )
     query_yesterday = (
@@ -130,7 +166,10 @@ def difference_in_days(db: Session = Depends(get_db)):
 
 
 @router.get("/weeklyfrequency")
-def weekly_frequency(db: Session = Depends(get_db)):
+def weekly_frequency(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     hoje = date.today()
 
     sunday = hoje - timedelta(days=(hoje.weekday() + 1) % 7)
@@ -142,7 +181,11 @@ def weekly_frequency(db: Session = Depends(get_db)):
 
     results = (
         db.query(Pomo.session_date, func.sum(Pomo.duration).label("total"))
-        .filter(Pomo.session_date >= sunday, Pomo.session_date <= hoje)
+        .filter(
+            Pomo.session_date >= sunday,
+            Pomo.session_date <= hoje,
+            Pomo.user_id == user.id,
+        )
         .group_by(Pomo.session_date)
         .all()
     )

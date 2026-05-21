@@ -5,7 +5,7 @@ from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 from MyPom.core.database import User, get_db
 from MyPom.schemas.user_schema import CurrentUser, UserModel
-from MyPom.core.security import get_current_user, get_password_hash
+from MyPom.core.security import email_pattern, get_current_user, get_password_hash
 
 router = APIRouter(tags=["user"])
 
@@ -16,6 +16,10 @@ def createUser(user: UserModel, db: Session = Depends(get_db)):
 
     if existsUser:
         raise HTTPException(detail="Username ou Email já Existe.", status_code=400)
+
+    if not email_pattern(user.email):
+        raise HTTPException(detail="Email inválido.", status_code=400)
+
     hashed_password = get_password_hash(user.password)
     newUser = User(username=user.username, email=user.email, password=hashed_password)
 
@@ -39,14 +43,15 @@ def search_user(db: Session = Depends(get_db)):
 def current_user(
     user: User = Depends(get_current_user),
 ):
-
-    current_user = CurrentUser(
-        username=user.username,
-        email=user.email,
-        focus=user.focus,
-    )
-
-    return current_user
+    try:
+        current_user = CurrentUser(
+            username=user.username,
+            email=user.email,
+            focus=user.focus,
+        )
+        return current_user
+    except Exception as e:
+        raise e
 
 
 @router.delete("/deleteUser/")

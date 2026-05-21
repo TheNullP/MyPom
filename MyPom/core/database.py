@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import DateTime, create_engine, func
+from sqlalchemy import DateTime, ForeignKey, create_engine, func
 from sqlalchemy.orm import Mapped, mapped_column, registry, sessionmaker
 from MyPom.core.setting import Settings
 
@@ -28,6 +28,7 @@ class Pomo:
         DateTime(timezone=True),
         server_default=func.now(),
     )
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
 
 
 reg.metadata.create_all(engine)

@@ -1,4 +1,5 @@
 const login_form = document.getElementById("login-form");
+const title = document.getElementById("title");
 
 login_form.addEventListener("submit", async (event) => {
 	event.preventDefault();
@@ -22,4 +23,10 @@ login_form.addEventListener("submit", async (event) => {
 		const error = await response.json();
 		alert(`Erro: ${error.detail}`);
 	}
+});
+
+title.addEventListener("click", async (e) => {
+	e.preventDefault();
+
+	window.location.href = "/";
 });

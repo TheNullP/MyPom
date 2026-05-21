@@ -5,9 +5,9 @@ from pydantic import BaseModel
 
 
 class SessionM(BaseModel):
-    id: int
     duration_seconds: int
     session_date: datetime.date
+    user_id: int
 
 
 class Session_In(BaseModel):
