@@ -32,17 +32,21 @@ clear_data.addEventListener("click", async () => {
 
 btn_time.addEventListener("click", async () => {
 	const selectValue = focus_time.value;
+	const token = localStorage.getItem("access_token");
 	try {
 		const response = await fetch("/options/updateFocus", {
 			method: "PUT",
-			headers: { "Content-Type": "application/json" },
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			},
 			body: JSON.stringify({ focus: parseInt(selectValue) }),
 		});
 
 		if (response.ok) {
 			alert("Atualizado com sucesso.");
 		}
-	} catch (error) {
+	} catch {
 		throw new Error(`Error: ${error}`);
 	}
 });
@@ -70,7 +74,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 			btn_logout.innerHTML = "Entrar";
 			btn_logout.style.color = "#ff2f00";
 		}
-	} catch (error) {
+	} catch {
+		const error = await response.json();
 		throw new Error(`Error: ${error}`);
 	}
 });

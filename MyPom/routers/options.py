@@ -2,6 +2,7 @@ from fastapi import Depends, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRouter
 from sqlalchemy.orm import Session
+from MyPom.core.security import get_current_user
 from MyPom.schemas.options_schema import UpdateFocus
 
 from MyPom.core.database import User, get_db, Pomo
@@ -11,9 +12,12 @@ router = APIRouter(tags=["options"])
 
 
 @router.delete("/clearDb")
-def clear_db(db: Session = Depends(get_db)):
+def clear_db(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     try:
-        db.query(Pomo).delete()
+        db.query(Pomo).filter_by(Pomo.user_id == user.id).delete()
         db.commit()
         return JSONResponse(
             content="Registro de Sessões limpado com sucesso.", status_code=200
@@ -29,6 +33,7 @@ def clear_db(db: Session = Depends(get_db)):
 def update_focus(
     time: UpdateFocus,
     db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     pass_time = [5, 10, 25, 45, 60]
 
@@ -38,7 +43,7 @@ def update_focus(
     if time is None or time.focus <= 0:
         raise HTTPException(detail="Erro: Selecione uma das opções.", status_code=400)
     try:
-        data = db.query(User).filter_by(id=2).first()
+        data = db.query(User).filter_by(user.id).first()
         data.focus = time.focus
         db.commit()
         db.refresh(data)

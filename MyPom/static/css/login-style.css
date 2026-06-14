@@ -83,8 +83,8 @@ body {
 }
 
 .error-message {
-	color: #ff3e3e;
-	font-size: 0.75rem;
+	color: #e74c3c;
+	font-size: 0.85rem;
 	margin-top: 4px;
-	display: none;
+	/* display: none; */
 }
