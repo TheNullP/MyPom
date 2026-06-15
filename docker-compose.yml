@@ -4,14 +4,13 @@ services:
     container_name: mypom-container
     restart: on-failure
 
-    depends_on:
-      - postgres
     networks:
       - web-network
     ports:
-      - '8080:8080'
+      - '127.0.0.1:8080:8080'
     env_file:
         - .env
 
 networks:
   web-network:
+    external: true
